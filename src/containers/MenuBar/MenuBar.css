@@ -1,0 +1,11 @@
+.MenuBar{
+    display: flex;
+    flex-flow: row;
+    /* justify-content: center; */
+    width: 80%;
+    margin: auto;
+}
+
+.MenuBar div {
+    padding-left: 10%;
+}
