@@ -1,0 +1,14 @@
+.Footer{
+    flex-shrink: 0;
+    text-align: center;
+    width: 100%;
+    /* position: fixed;
+    bottom: 0; */
+    /* margin: auto; */
+    background-color: brown;
+    color: #F5F5F5;
+}
+
+.Footer span {
+    padding-left: 10%;
+}

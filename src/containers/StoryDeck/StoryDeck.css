@@ -1,15 +1,15 @@
 .StoryDeck{
-    /* display: flex;
-    flex-flow: row; */
-    justify-content: center;
-    width: 80%;
-    margin: auto;
-}
-
-.StoryCard {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-between;
     width: 80%;
     margin: auto;
+    background-color:white;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.StoryDeck section{
+    /* padding-left: 5%;
+    padding-right: 5%; */
 }

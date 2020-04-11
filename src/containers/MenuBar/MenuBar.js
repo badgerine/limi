@@ -3,12 +3,12 @@ import './MenuBar.css';
 
 const menuBar = (props) =>  (
         <div className="MenuBar">
-            <div>LIMI</div>
-            <div>|</div>
-            <div>Home</div>
-            <div>About</div>
-            <div>|</div>
-            <div>Search</div>
+            <span>LIMI</span>
+            <span>|</span>
+            <span>Home</span>
+            <span>About</span>
+            <span>|</span>
+            <span>Search</span>
         </div>
 );
 
