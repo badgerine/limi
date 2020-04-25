@@ -12,6 +12,7 @@ class StoryDeck extends Component {
         stories: [
             {
                 id: "1",
+                mediaId: "physicallyFit.mp4",
                 title: "Colbert's dancing dreadlocks",
                 synopsis: "The more Colbert practises his guitar, the more he can feel the vibration of the music.",
                 genre: "fiction",
@@ -23,6 +24,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "2",
+                mediaId: "physicallyFit.mp4",
                 title: "Nitshitzivu finds a flying horse",
                 synopsis: "Nitshitzivu is constantly exploring the huge garden at her grandmother's. One day she meets an unexpected friend.",
                 genre: "fiction",
@@ -34,6 +36,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "3",
+                mediaId: "physicallyFit.mp4",
                 title: "Luthendo builds a flying skateboard",
                 synopsis: "Luthendo loves playing on her skateboard, but she also likes playing with machines. Sometimes she doesnt know which one to play with.",
                 genre: "fiction",
@@ -45,6 +48,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "4",
+                mediaId: "physicallyFit.mp4",
                 title: "Thoni's electric soccer ball",
                 synopsis: "Thoni always wanted to be football star, but he keeps missing the goals. What if he could control where the ball goes another way.",
                 genre: "fiction",
@@ -56,6 +60,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "5",
+                mediaId: "physicallyFit.mp4",
                 title: "Tintswalo's remote controlled cow",
                 synopsis: "Tintswalo lives with her older brother who is always looking for one of his cows that go wandering off. She starts working on a solution.",
                 genre: "fiction",
@@ -67,6 +72,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "6",
+                mediaId: "physicallyFit.mp4",
                 title: "Ngadji builds a robot",
                 synopsis: "Ngadji is always being told to wash the dishes, or clean the house. She also has a great imagination and is not afraid to try new things.",
                 genre: "fiction",
@@ -78,6 +84,7 @@ class StoryDeck extends Component {
             },
             {
                 id: "7",
+                mediaId: "physicallyFit.mp4",
                 title: "Nkateko's electric wand",
                 synopsis: "Nkateko lives in a hidden village surrounded by a think forest. Sometimes his sheep run off and he has to find them in the dark night. How can he create light without burning the forest?",
                 genre: "fiction",
@@ -91,18 +98,35 @@ class StoryDeck extends Component {
     }
 
     componentDidMount() {
-        const stories = this.state.stories.slice(0,6);
-        this.setState({stories: stories});
+        const stories = this.state.stories.slice(0, 6);
+        this.setState({ stories: stories });
     }
 
-    // storySelectedHandler = () => {
-
-    // }
+    storySelectedHandler = (id, mediaId) => {
+        this.props.history.push({
+            pathname: 'story-roll/'+id,
+            search: '?mediaId='+mediaId
+        })
+    }
 
     render() {
         let storyCards = this.state.stories.map(story => (
             // <Link to={"/story-roll/" + story.id} key={story.id} style={{ textDecoration: 'none' }}>
-                <StoryCard 
+            //     <StoryCard
+            //         id={story.id}
+            //         title={story.title}
+            //         synopsis={story.synopsis}
+            //         genre={story.genre}
+            //         readingTime={story.readingTime}
+            //         audioLanguage={story.audioLanguage}
+            //         primaryText={story.primaryText}
+            //         secondaryText={story.secondaryText}
+            //         author={story.author}
+            //     // clicked={this.storySelectedHandler}
+            //     />
+            // </Link>
+            <div key={story.id} style={{ textDecoration: 'none' }}>
+                <StoryCard
                     id={story.id}
                     title={story.title}
                     synopsis={story.synopsis}
@@ -111,16 +135,16 @@ class StoryDeck extends Component {
                     audioLanguage={story.audioLanguage}
                     primaryText={story.primaryText}
                     secondaryText={story.secondaryText}
-                    author={story.author} 
-                    // clicked={this.storySelectedHandler}
-                    />
-            // </Link>
+                    author={story.author}
+                    clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
+                />
+            </div>
         ));
         return (
             // <React.Fragment>
             <div>
                 <section className="StoryDeck">
-                   {storyCards}
+                    {storyCards}
                 </section>
             </div>
             // </React.Fragment>
