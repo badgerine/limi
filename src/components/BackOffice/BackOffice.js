@@ -16,30 +16,35 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
     card: {
-      borderRadius: 0
+        borderRadius: 0
     }
-  });
+});
 
 class BackOffice extends Component {
     state = {
-        newStory: {},
         selectedStory: null,
         addingStory: false,
         edittingStory: false,
-        newStoryOpen: false
+        newStoryOpen: false,
+        newStory: {}
     }
 
     toggleNewStory = () => {
         const open = this.state.newStoryOpen;
-        this.setState({newStoryOpen: !open})
+        this.setState({ newStoryOpen: !open });
     }
 
-    handleSubmitStory = () => {
-
+    handleSubmitStory = (newStoryInput) => {
+        console.log(newStoryInput);
+        this.setState({ newStory: newStoryInput, newStoryOpen: false });
+        console.log(this.state.newStory);
+        // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
     }
 
     render() {
         const { classes } = this.props;
+
+        const newStoryInput = {};
 
         let storyCards = this.props.stories.map(story => (
             <div key={story.id} style={{ textDecoration: 'none' }}>
@@ -74,7 +79,7 @@ class BackOffice extends Component {
                 <br />
                 <hr />
                 {storyCards}
-                <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} onSubmit={() => this.handleSubmitStory(newStoryInput)} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">New Story</DialogTitle>
                     <DialogContent>
                         <DialogContentText>Complete the new Story details.</DialogContentText>
@@ -85,23 +90,91 @@ class BackOffice extends Component {
                                 </Grid>
                                 <Grid item xs={6} >
                                     <TextField
-                                        id="guardian-firstname-tf"
-                                        onChange={event => this.state.newStory.title = event.target.value}
-                                        defaultValue=''
-                                        value={this.state.newStory.title}
+                                        id="story-title-tf"
+                                        onChange={event => newStoryInput.title = event.target.value}
+                                        defaultValue={newStoryInput.title}
+                                        value={newStoryInput.title}
                                     />
                                 </Grid>
-                                {/* <Grid item xs={6} >
-                                    <FormLabel id="guardian-lastName-label">Guardian Last Name</FormLabel>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-synopsis-lbl">Synopsis</FormLabel>
                                 </Grid>
                                 <Grid item xs={6} >
                                     <TextField
-                                        id="guardian-lastName-tf"
-                                        onChange={event => contact.lastName = event.target.value}
-                                        defaultValue={this.props.guardian.lastName}
-                                        value={contact.lastName}
+                                        id="story-synopsis-tf"
+                                        onChange={event => newStoryInput.synopsis = event.target.value}
+                                        defaultValue={newStoryInput.synopsis}
+                                        value={newStoryInput.synopsis}
+                                        multiline
+                                        rows={3}
                                     />
-                                </Grid> */}
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-genre-lbl">Genre</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-genre-tf"
+                                        onChange={event => newStoryInput.genre = event.target.value}
+                                        defaultValue={newStoryInput.genre}
+                                        value={newStoryInput.genre}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-readingTime-lbl">Reading Time</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-readingTime-tf"
+                                        onChange={event => newStoryInput.readingTime = event.target.value}
+                                        defaultValue={newStoryInput.genre}
+                                        value={newStoryInput.genre}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-audioLanguage-lbl">Audio Language</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-audioLanguage-tf"
+                                        onChange={event => newStoryInput.audioLanguage = event.target.value}
+                                        defaultValue={newStoryInput.audioLanguage}
+                                        value={newStoryInput.audioLanguage}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-primaryText-lbl">Text Language</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-primaryText-tf"
+                                        onChange={event => newStoryInput.primaryText = event.target.value}
+                                        defaultValue={newStoryInput.primaryText}
+                                        value={newStoryInput.primaryText}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-primaryText-lbl">Text Language Alt</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-primaryText-tf"
+                                        onChange={event => newStoryInput.secondaryText = event.target.value}
+                                        defaultValue={newStoryInput.secondaryText}
+                                        value={newStoryInput.secondaryText}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <FormLabel id="story-author-lbl">Author</FormLabel>
+                                </Grid>
+                                <Grid item xs={6} >
+                                    <TextField
+                                        id="story-author-tf"
+                                        onChange={event => newStoryInput.author = event.target.value}
+                                        defaultValue={newStoryInput.author}
+                                        value={newStoryInput.author}
+                                    />
+                                </Grid>
                             </Grid>
                         </FormControl>
                     </DialogContent>
@@ -109,7 +182,7 @@ class BackOffice extends Component {
                         <Button onClick={this.toggleNewStory} color="primary">
                             Cancel
                 </Button>
-                        <Button onClick={this.handleSubmitStory} color="primary">
+                        <Button onClick={() => this.handleSubmitStory(newStoryInput)} color="primary">
                             Submit
                 </Button>
                     </DialogActions>

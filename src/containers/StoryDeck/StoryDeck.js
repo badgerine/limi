@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './StoryDeck.css';
-import MenuBar from '../MenuBar/MenuBar';
 import StoryCard from '../../components/StoryCard/StoryCard';
-import { Link } from 'react-router-dom';
-import storyCard from '../../components/StoryCard/StoryCard';
 
 class StoryDeck extends Component {
 
