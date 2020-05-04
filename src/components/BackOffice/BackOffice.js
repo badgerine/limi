@@ -23,10 +23,10 @@ const styles = theme => ({
 class BackOffice extends Component {
     state = {
         selectedStory: null,
-        addingStory: false,
+        storyAdded: false,
         edittingStory: false,
         newStoryOpen: false,
-        newStory: {}
+        newStory: null
     }
 
     toggleNewStory = () => {
@@ -41,10 +41,31 @@ class BackOffice extends Component {
         // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
     }
 
+    storySelectedHandler = (story) => {
+        console.log('story selected');
+    }
+
     render() {
         const { classes } = this.props;
 
         const newStoryInput = {};
+        let newStoryCard = null;
+        if(this.state.newStory){
+            newStoryCard = ( <div style={{ textDecoration: 'none' }}>
+            <StoryCard
+                id={this.state.newStory.id}
+                title={this.state.newStory.title}
+                synopsis={this.state.newStory.synopsis}
+                genre={this.state.newStory.genre}
+                readingTime={this.state.newStory.readingTime}
+                audioLanguage={this.state.newStory.audioLanguage}
+                primaryText={this.state.newStory.primaryText}
+                secondaryText={this.state.newStory.secondaryText}
+                author={this.state.newStory.author}
+                clicked={() => this.storySelectedHandler(this.state.newStory.id, this.state.newStory.mediaId)}
+            />
+        </div>);
+        }
 
         let storyCards = this.props.stories.map(story => (
             <div key={story.id} style={{ textDecoration: 'none' }}>
@@ -77,6 +98,7 @@ class BackOffice extends Component {
                     <span> Remove Stories <button>Go</button></span>
                 </div>
                 <br />
+                {newStoryCard}
                 <hr />
                 {storyCards}
                 <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} onSubmit={() => this.handleSubmitStory(newStoryInput)} aria-labelledby="form-dialog-title">
