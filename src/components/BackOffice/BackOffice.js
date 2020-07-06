@@ -11,6 +11,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import StoryCard from '../StoryCard/StoryCard';
 import { withStyles } from '@material-ui/styles';
+
+import { newStoryForm, mediaUpload } from './NewStory';
 // import './BackOffice.css';
 
 
@@ -26,19 +28,38 @@ class BackOffice extends Component {
         storyAdded: false,
         edittingStory: false,
         newStoryOpen: false,
-        newStory: null
+        newStory: null,
+        nextCount: 0
     }
+
+    toggleNext = () => {
+        this.setState((prevState, props) => ({
+            nextCount: prevState.nextCount + 1
+        }));
+
+    }
+
+    toggleBack = () => {
+
+    }
+
 
     toggleNewStory = () => {
         const open = this.state.newStoryOpen;
         this.setState({ newStoryOpen: !open });
     }
 
-    handleSubmitStory = (newStoryInput) => {
+    memmoriseStory = (newStoryInput) => {
+
         console.log(newStoryInput);
-        this.setState({ newStory: newStoryInput, newStoryOpen: false });
+        this.setState({ newStory: newStoryInput});
         console.log(this.state.newStory);
+        this.toggleNext();
         // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
+    }
+
+    handleSubmitStory = () => {
+
     }
 
     storySelectedHandler = (story) => {
@@ -50,21 +71,21 @@ class BackOffice extends Component {
 
         const newStoryInput = {};
         let newStoryCard = null;
-        if(this.state.newStory){
-            newStoryCard = ( <div style={{ textDecoration: 'none' }}>
-            <StoryCard
-                id={this.state.newStory.id}
-                title={this.state.newStory.title}
-                synopsis={this.state.newStory.synopsis}
-                genre={this.state.newStory.genre}
-                readingTime={this.state.newStory.readingTime}
-                audioLanguage={this.state.newStory.audioLanguage}
-                primaryText={this.state.newStory.primaryText}
-                secondaryText={this.state.newStory.secondaryText}
-                author={this.state.newStory.author}
-                clicked={() => this.storySelectedHandler(this.state.newStory.id, this.state.newStory.mediaId)}
-            />
-        </div>);
+        if (this.state.newStory) {
+            newStoryCard = (<div style={{ textDecoration: 'none' }}>
+                <StoryCard
+                    id={this.state.newStory.id}
+                    title={this.state.newStory.title}
+                    synopsis={this.state.newStory.synopsis}
+                    genre={this.state.newStory.genre}
+                    readingTime={this.state.newStory.readingTime}
+                    audioLanguage={this.state.newStory.audioLanguage}
+                    primaryText={this.state.newStory.primaryText}
+                    secondaryText={this.state.newStory.secondaryText}
+                    author={this.state.newStory.author}
+                    clicked={() => this.storySelectedHandler(this.state.newStory.id, this.state.newStory.mediaId)}
+                />
+            </div>);
         }
 
         let storyCards = this.props.stories.map(story => (
@@ -82,6 +103,14 @@ class BackOffice extends Component {
                     clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
                 />
             </div>));
+
+        let newStoryEntry = null;
+        switch (this.state.nextCount) {
+            case 0: newStoryEntry = newStoryForm(newStoryInput, classes);
+            break;
+            case 1: newStoryEntry = mediaUpload();
+            
+        }
 
         return (
             <React.Fragment>
@@ -104,109 +133,15 @@ class BackOffice extends Component {
                 <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} onSubmit={() => this.handleSubmitStory(newStoryInput)} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">New Story</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>Complete the new Story details.</DialogContentText>
-                        <FormControl className={classes.formControl}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={6} >
-                                    <FormLabel id="title">Title</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-title-tf"
-                                        onChange={event => newStoryInput.title = event.target.value}
-                                        defaultValue={newStoryInput.title}
-                                        value={newStoryInput.title}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-synopsis-lbl">Synopsis</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-synopsis-tf"
-                                        onChange={event => newStoryInput.synopsis = event.target.value}
-                                        defaultValue={newStoryInput.synopsis}
-                                        value={newStoryInput.synopsis}
-                                        multiline
-                                        rows={3}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-genre-lbl">Genre</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-genre-tf"
-                                        onChange={event => newStoryInput.genre = event.target.value}
-                                        defaultValue={newStoryInput.genre}
-                                        value={newStoryInput.genre}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-readingTime-lbl">Reading Time</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-readingTime-tf"
-                                        onChange={event => newStoryInput.readingTime = event.target.value}
-                                        defaultValue={newStoryInput.genre}
-                                        value={newStoryInput.genre}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-audioLanguage-lbl">Audio Language</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-audioLanguage-tf"
-                                        onChange={event => newStoryInput.audioLanguage = event.target.value}
-                                        defaultValue={newStoryInput.audioLanguage}
-                                        value={newStoryInput.audioLanguage}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-primaryText-lbl">Text Language</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-primaryText-tf"
-                                        onChange={event => newStoryInput.primaryText = event.target.value}
-                                        defaultValue={newStoryInput.primaryText}
-                                        value={newStoryInput.primaryText}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-primaryText-lbl">Text Language Alt</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-primaryText-tf"
-                                        onChange={event => newStoryInput.secondaryText = event.target.value}
-                                        defaultValue={newStoryInput.secondaryText}
-                                        value={newStoryInput.secondaryText}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <FormLabel id="story-author-lbl">Author</FormLabel>
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <TextField
-                                        id="story-author-tf"
-                                        onChange={event => newStoryInput.author = event.target.value}
-                                        defaultValue={newStoryInput.author}
-                                        value={newStoryInput.author}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </FormControl>
+                        {newStoryEntry}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.toggleNewStory} color="primary">
                             Cancel
-                </Button>
-                        <Button onClick={() => this.handleSubmitStory(newStoryInput)} color="primary">
-                            Submit
-                </Button>
+                        </Button>
+                        <Button onClick={() => this.memmoriseStory(newStoryInput)} color="primary">
+                            Next
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </React.Fragment>
