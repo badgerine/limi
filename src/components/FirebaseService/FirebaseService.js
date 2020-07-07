@@ -1,6 +1,6 @@
 import * as firebaseService from 'firebase';
 
-const config = {
+export const config = {
   apiKey: "AIzaSyD2uIp8ew6goBwgSzB3QtIVT78ohMNZKDc",
   authDomain: "limi-46e7d.firebaseapp.com",
   databaseURL: "https://limi-46e7d.firebaseio.com",

@@ -13,6 +13,7 @@ import StoryCard from '../StoryCard/StoryCard';
 import { withStyles } from '@material-ui/styles';
 
 import { newStoryForm, mediaUpload } from './NewStory';
+import axios from '../../axios-stories';
 // import './BackOffice.css';
 
 
@@ -32,6 +33,12 @@ class BackOffice extends Component {
         nextCount: 0
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        const doUpdate = this.state != nextState;
+        console.log('[Backoffice.componentWillUpdate]', 'doUpdate=', doUpdate);
+        return doUpdate;
+    }
+
     toggleNext = () => {
         this.setState((prevState, props) => ({
             nextCount: prevState.nextCount + 1
@@ -43,23 +50,43 @@ class BackOffice extends Component {
 
     }
 
+    updateNewStoryMediaId = (mediaId) => {
+        if (mediaId != this.state.newStory.mediaId) {
+            const incompleteStory = { ...this.state.newStory };
+            incompleteStory[mediaId] = mediaId;
+            console.log('[Backoffice.updateNewStoryMediaId]', 'trying to set the mediaId', mediaId);
+            this.setState({ newStory: incompleteStory });
+        }
+    }
+
 
     toggleNewStory = () => {
         const open = this.state.newStoryOpen;
         this.setState({ newStoryOpen: !open });
     }
 
-    memmoriseStory = (newStoryInput) => {
-
-        console.log(newStoryInput);
-        this.setState({ newStory: newStoryInput});
-        console.log(this.state.newStory);
-        this.toggleNext();
+    memoriseStory = (newStoryInput) => {
+        if (this.state.nextCount == 0) {
+            console.log('[Backoffice.memoriseStory]',newStoryInput);
+            this.setState({ newStory: newStoryInput });
+            this.toggleNext();
+        } else {
+            console.log('[Backoffice.memoriseStory]', 'trying to set the mediaId', newStoryInput);
+            this.setState({ newStoryOpen: false, newStory: newStoryInput });
+            this.handleSubmitStory();
+        }
         // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
     }
 
     handleSubmitStory = () => {
-
+        const completeNewStory = { ...this.state.newStory };
+        axios.post('stories.json', completeNewStory)
+            .then(response => {
+                console.log('[Backoffice.handleSubmitStory]', response);
+            })
+            .catch(error => {
+                console.log('[Backoffice.handleSubmitStory]Error, something went wrong trying to persist story.', error);
+            })
     }
 
     storySelectedHandler = (story) => {
@@ -69,7 +96,7 @@ class BackOffice extends Component {
     render() {
         const { classes } = this.props;
 
-        const newStoryInput = {};
+        let newStoryInput = {};
         let newStoryCard = null;
         if (this.state.newStory) {
             newStoryCard = (<div style={{ textDecoration: 'none' }}>
@@ -105,11 +132,15 @@ class BackOffice extends Component {
             </div>));
 
         let newStoryEntry = null;
+        let mediaId = null;
         switch (this.state.nextCount) {
             case 0: newStoryEntry = newStoryForm(newStoryInput, classes);
-            break;
-            case 1: newStoryEntry = mediaUpload();
-            
+                break;
+            case 1: newStoryEntry = mediaUpload(this.state.newStory.title, 
+                // (mediaIdInput) => this.updateNewStoryMediaId(mediaId));
+                (mediaIdInput) => {
+                    newStoryInput = {...this.state.newStory};
+                    newStoryInput['mediaId'] = mediaIdInput;})
         }
 
         return (
@@ -139,8 +170,8 @@ class BackOffice extends Component {
                         <Button onClick={this.toggleNewStory} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={() => this.memmoriseStory(newStoryInput)} color="primary">
-                            Next
+                        <Button onClick={() => this.memoriseStory(newStoryInput)} color="primary">
+                            {this.state.nextCount == 0 ? 'Next' : 'Submit'}
                         </Button>
                     </DialogActions>
                 </Dialog>

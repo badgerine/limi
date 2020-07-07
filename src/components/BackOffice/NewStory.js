@@ -115,9 +115,12 @@ const fileSelectedHandler = event => {
     console.log(event);
 }
 
-export const mediaUpload = () => {
+export const mediaUpload = (title, returnMediaId) => {
+    returnMediaId('TODO-after-upload');
     return (
         <Fragment>
+            <h2>{title}</h2>
             <input type="file" onChange={fileSelectedHandler}/>
+            
         </Fragment>)
 }
