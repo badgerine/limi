@@ -1,13 +1,10 @@
-import React, { Fragment } from "react";
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { TextField, FormLabel } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import { FormLabel, TextField } from '@material-ui/core';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import React, { Fragment } from "react";
+import firebaseService from '../FirebaseService/FirebaseService';
+import {MediaUploader} from './MediaUploader';
 
 export const newStoryForm = (newStoryInput, classes) => {
     return (
@@ -116,11 +113,8 @@ const fileSelectedHandler = event => {
 }
 
 export const mediaUpload = (title, returnMediaId) => {
-    returnMediaId('TODO-after-upload');
+    // returnMediaId('TODO-after-upload');
     return (
-        <Fragment>
-            <h2>{title}</h2>
-            <input type="file" onChange={fileSelectedHandler}/>
-            
-        </Fragment>)
+        <MediaUploader getMediaId={(mediaId) => returnMediaId(mediaId)} />
+       )
 }

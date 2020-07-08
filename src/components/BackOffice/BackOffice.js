@@ -72,8 +72,7 @@ class BackOffice extends Component {
             this.toggleNext();
         } else {
             console.log('[Backoffice.memoriseStory]', 'trying to set the mediaId', newStoryInput);
-            this.setState({ newStoryOpen: false, newStory: newStoryInput });
-            this.handleSubmitStory();
+            this.setState({ newStoryOpen: false, newStory: newStoryInput }, this.handleSubmitStory());
         }
         // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
     }
@@ -132,7 +131,6 @@ class BackOffice extends Component {
             </div>));
 
         let newStoryEntry = null;
-        let mediaId = null;
         switch (this.state.nextCount) {
             case 0: newStoryEntry = newStoryForm(newStoryInput, classes);
                 break;

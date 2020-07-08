@@ -1,112 +1,54 @@
-import React, { Component } from 'react';
-import FileUploader from 'reactjs-file-uploader';
+import React, { useState } from 'react'
+import firebaseService from "../FirebaseService/FirebaseService";
 
-class MediaUploader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            files: [],
-        };
-        this.uploadFiles = this.uploadFiles.bind(this);
-        this.uploadFile = this.uploadFile.bind(this);
+export const MediaUploader = (props) => {
+    const allInputs = { imgUrl: '' };
+    const [imageAsFile, setImageAsFile] = useState('');
+    const [imageAsUrl, setImageAsUrl] = useState(allInputs);
+
+    console.log(imageAsFile)
+    const handleImageAsFile = (e) => {
+        const image = e.target.files[0]
+        setImageAsFile(image);
     }
- 
-    render() {
-        return (
-            <div>
+
+    const handleFireBaseUpload = e => {
+        e.preventDefault()
+        console.log('start of upload')
+        // async magic goes here...
+        if (imageAsFile === '') {
+            console.error(`not an image, the image file is a ${typeof (imageAsFile)}`)
+        }
+        props.getMediaId(imageAsFile.name);
+        const uploadTask = firebaseService.storage().ref(`/media/${imageAsFile.name}`).put(imageAsFile);
+        uploadTask.on( 'state_changed', 
+        (snapShot) => {
+          //takes a snap shot of the process as it is happening
+          console.log(snapShot)
+        }, (err) => {
+          //catches the errors
+          console.log(err)
+        }, () => {
+          // gets the functions from storage refences the image storage in firebase by the children
+          // gets the download url then sets the image from firebase as the value for the imgUrl key:
+          
+          firebaseService.storage().ref('media').child(imageAsFile.name).getDownloadURL()
+           .then(fireBaseUrl => {
+             setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+           })
+        });
+    }
+
+    return (
+        <div className="App">
+            <form onSubmit={handleFireBaseUpload}>
                 <input
                     type="file"
-                    accept="image/*"
-                    onChange={event => this.setState({files: this.state.files.concat(Array.from(event.target.files))})}
-                    multiple
+                    onChange={handleImageAsFile}
                 />
-                <FileManager
-                    files={this.state.files}
-                >
-                    {this.uploadFiles}
-                </FileManager>
-            </div>
-        )
-    }
- 
-    uploadFiles(files) {
-        return files.map(this.uploadFile);
-    }
- 
-    uploadFile(file) {
-        return (
-            <FileUploader
-                key={file.key}
-                file={file}
-                url='https://api.cloudinary.com/v1_1/dpdenton/upload'
-                formData={{
-                    file,
-                    upload_preset: 'public',
-                    tags: 'vanilla',
-                }}
-                readFile
-            >
-                {this.fileProgress}
-            </FileUploader>
-        )
-    }
- 
-    static fileProgress({
-    
-        /*
-        References to the Event objects.
-        Initial state is null and each propert gets assigned on Event.
-         */
-        uploadReady,
-        uploadStart,
-        uploadProgress,
-        uploadComplete,
-        downloadStart,
-        downloadProgress,
-        downloadComplete,
-        error,
-        abort,
-        timeout,
- 
-        /*
-        The sequential state of the request
-        enum {
-            uploadReady, uploadStart, uploadProgress, uploadComplete, downloadStart
-            downloadStart, downloadProgress, downloadComplete
-        }
-         */
-        requestState,
- 
-        /*
-        Function references to start / abort request
-          */
-        startUpload,
-        abortRequest,
- 
-        /*
-        Request Object reference (XMLHttpReqeust)
-         */
-        request,
- 
-        /*
-        Response text Object (JSON)
-         */
-        response,
- 
-        /*
-        Data of the file being uploaded (if readData props is true)
-         */
-        fileData,
- 
-     }) {
-        return (
-            <div>
-                {fileData && <img src={fileData} width={200} alt="Preview"/>}
-                {startUpload && <button onClick={startUpload}>Upload File</button>}
-                {requestState && requestState}
-            </div>
-        )
-    }
+                <button>upload to firebase</button>
+            </form>
+            <img src={imageAsUrl.imgUrl} alt="image tag" />
+        </div>
+    );
 }
-
-export default MediaUploader;
