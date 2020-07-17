@@ -115,6 +115,6 @@ const fileSelectedHandler = event => {
 export const mediaUpload = (title, returnMediaId) => {
     // returnMediaId('TODO-after-upload');
     return (
-        <MediaUploader getMediaId={(mediaId) => returnMediaId(mediaId)} />
+        <MediaUploader storyTitle={title} getMediaId={(mediaId) => returnMediaId(mediaId)} />
        )
 }

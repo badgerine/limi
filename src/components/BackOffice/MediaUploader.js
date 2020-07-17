@@ -41,6 +41,7 @@ export const MediaUploader = (props) => {
 
     return (
         <div className="App">
+            <h3>{props.storyTitle}</h3>
             <form onSubmit={handleFireBaseUpload}>
                 <input
                     type="file"

@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { TextField, FormLabel } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import StoryCard from '../StoryCard/StoryCard';
 import { withStyles } from '@material-ui/styles';
-
-import { newStoryForm, mediaUpload } from './NewStory';
+import Box from '@material-ui/core/Box';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from '../../axios-stories';
-// import './BackOffice.css';
+import StoryCard from '../StoryCard/StoryCard';
+import './BackOffice.css';
+import { mediaUpload, newStoryForm } from './NewStory';
+
 
 
 const styles = theme => ({
     card: {
-        borderRadius: 0
+        borderRadius: 0,
     }
 });
 
@@ -33,11 +30,11 @@ class BackOffice extends Component {
         nextCount: 0
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        const doUpdate = this.state != nextState;
-        console.log('[Backoffice.componentWillUpdate]', 'doUpdate=', doUpdate);
-        return doUpdate;
-    }
+    // componentWillUpdate(nextProps, nextState) {
+    //     const doUpdate = this.state != nextState;
+    //     console.log('[Backoffice.componentWillUpdate]', 'doUpdate=', doUpdate);
+    //     return doUpdate;
+    // }
 
     toggleNext = () => {
         this.setState((prevState, props) => ({
@@ -67,12 +64,12 @@ class BackOffice extends Component {
 
     memoriseStory = (newStoryInput) => {
         if (this.state.nextCount == 0) {
-            console.log('[Backoffice.memoriseStory]',newStoryInput);
+            console.log('[Backoffice.memoriseStory]', newStoryInput);
             this.setState({ newStory: newStoryInput });
             this.toggleNext();
         } else {
             console.log('[Backoffice.memoriseStory]', 'trying to set the mediaId', newStoryInput);
-            this.setState({ newStoryOpen: false, newStory: newStoryInput }, this.handleSubmitStory());
+            this.setState({ newStoryOpen: false, newStory: newStoryInput }, () => this.handleSubmitStory());
         }
         // return {newStoryOpen: false, newStory: {default: "sdfjlk"}};
     }
@@ -88,8 +85,8 @@ class BackOffice extends Component {
             })
     }
 
-    storySelectedHandler = (story) => {
-        console.log('story selected');
+    storySelectedHandler = (storyId, mediaId) => {
+        console.log('story selected=', storyId, " | ", mediaId);
     }
 
     render() {
@@ -109,13 +106,14 @@ class BackOffice extends Component {
                     primaryText={this.state.newStory.primaryText}
                     secondaryText={this.state.newStory.secondaryText}
                     author={this.state.newStory.author}
+                    mediaId={this.state.newStory.mediaId}
                     clicked={() => this.storySelectedHandler(this.state.newStory.id, this.state.newStory.mediaId)}
                 />
             </div>);
         }
 
         let storyCards = this.props.stories.map(story => (
-            <div key={story.id} style={{ textDecoration: 'none' }}>
+            <Box p={1} key={story.id} style={{ textDecoration: 'none' }}>
                 <StoryCard
                     id={story.id}
                     title={story.title}
@@ -128,23 +126,43 @@ class BackOffice extends Component {
                     author={story.author}
                     clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
                 />
-            </div>));
+            </Box>));
 
         let newStoryEntry = null;
         switch (this.state.nextCount) {
             case 0: newStoryEntry = newStoryForm(newStoryInput, classes);
                 break;
-            case 1: newStoryEntry = mediaUpload(this.state.newStory.title, 
+            case 1: newStoryEntry = mediaUpload(this.state.newStory.title,
                 // (mediaIdInput) => this.updateNewStoryMediaId(mediaId));
                 (mediaIdInput) => {
-                    newStoryInput = {...this.state.newStory};
-                    newStoryInput['mediaId'] = mediaIdInput;})
+                    newStoryInput = { ...this.state.newStory };
+                    newStoryInput['mediaId'] = mediaIdInput;
+                })
         }
 
         return (
             <React.Fragment>
                 <h1>Story Admin</h1>
-                <div>
+                <Box display="flex" flexWrap="wrap">
+                    <Box>
+                        <div>
+                            <span><input type="text" /> <button>Search</button></span>
+                        </div>
+                        <br />
+                        <div>
+                            <span>New Story <button onClick={this.toggleNewStory}>Add</button></span>
+                        </div>
+                        <br />
+                        <div>
+                            <span> Remove Stories <button>Go</button></span>
+                        </div>
+                        <br />
+                    </Box>
+                    <Box>
+                        {newStoryCard}
+                    </Box>
+                </Box>
+                {/* <div>
                     <span><input type="text" /> <button>Search</button></span>
                 </div>
                 <br />
@@ -156,10 +174,13 @@ class BackOffice extends Component {
                     <span> Remove Stories <button>Go</button></span>
                 </div>
                 <br />
-                {newStoryCard}
+                {newStoryCard} */}
                 <hr />
-                {storyCards}
-                <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} onSubmit={() => this.handleSubmitStory(newStoryInput)} aria-labelledby="form-dialog-title">
+                <Box display="flex" flexWrap="wrap">
+                    {storyCards}
+                </Box>
+
+                <Dialog open={this.state.newStoryOpen} onClose={this.toggleNewStory} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">New Story</DialogTitle>
                     <DialogContent>
                         {newStoryEntry}
