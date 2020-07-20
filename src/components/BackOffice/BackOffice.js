@@ -5,12 +5,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-stories';
 import StoryCard from '../StoryCard/StoryCard';
 import './BackOffice.css';
 import { mediaUpload, newStoryForm } from './NewStory';
+import * as actions from '../../store/actions';
 
 
 
@@ -30,11 +32,17 @@ class BackOffice extends Component {
         nextCount: 0
     }
 
-    // componentWillUpdate(nextProps, nextState) {
-    //     const doUpdate = this.state != nextState;
-    //     console.log('[Backoffice.componentWillUpdate]', 'doUpdate=', doUpdate);
-    //     return doUpdate;
-    // }
+    componentDidMount() {
+        if (!this.props.storiesLoaded || this.props.storiesModified) {
+            this.props.onLoadStories();
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.storiesModified) {
+            this.props.onLoadStories();
+        }
+    }
 
     toggleNext = () => {
         this.setState((prevState, props) => ({
@@ -78,6 +86,7 @@ class BackOffice extends Component {
         const completeNewStory = { ...this.state.newStory };
         axios.post('stories.json', completeNewStory)
             .then(response => {
+                this.props.onAddStory(completeNewStory);
                 console.log('[Backoffice.handleSubmitStory]', response);
             })
             .catch(error => {
@@ -112,21 +121,24 @@ class BackOffice extends Component {
             </div>);
         }
 
-        let storyCards = this.props.stories.map(story => (
-            <Box p={1} key={story.id} style={{ textDecoration: 'none' }}>
-                <StoryCard
-                    id={story.id}
-                    title={story.title}
-                    synopsis={story.synopsis}
-                    genre={story.genre}
-                    readingTime={story.readingTime}
-                    audioLanguage={story.audioLanguage}
-                    primaryText={story.primaryText}
-                    secondaryText={story.secondaryText}
-                    author={story.author}
-                    clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
-                />
-            </Box>));
+        let storyCards = <CircularProgress color="secondary" />;
+        if (this.props.stories.length > 0) {
+            storyCards = this.props.stories.map(story => (
+                <Box p={1} key={story.id} style={{ textDecoration: 'none' }}>
+                    <StoryCard
+                        id={story.id}
+                        title={story.title}
+                        synopsis={story.synopsis}
+                        genre={story.genre}
+                        readingTime={story.readingTime}
+                        audioLanguage={story.audioLanguage}
+                        primaryText={story.primaryText}
+                        secondaryText={story.secondaryText}
+                        author={story.author}
+                        clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
+                    />
+                </Box>));
+        }
 
         let newStoryEntry = null;
         switch (this.state.nextCount) {
@@ -202,8 +214,16 @@ class BackOffice extends Component {
 //stores a function
 const mapStateToProps = (state) => {
     return {
-        stories: state.stories
+        stories: state.stories,
+        storiesLoaded: state.storiesLoaded
     };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(BackOffice));
+const mapDispatchToProps = dispatch => {
+    return {
+        onLoadStories: () => dispatch(actions.fetchStories()),
+        onAddStory: (newStory) => dispatch(actions.addStory(newStory))
+    }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(BackOffice));
