@@ -1,7 +1,7 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-
+import BackgroundImage from '../../assets/cansi-tiling.png';
 
 
 export default makeStyles(() => {
@@ -24,6 +24,9 @@ export default makeStyles(() => {
             backgroundColor: theme.palette.primary.main,
             // color: theme.palette.primary.main
         },
+        // paperContainer: {
+        //     backgroundImage: `url(${"../../assets/cansi-tiling.png"})`
+        // },
         icon: {
             marginRight: theme.spacing(2),
             height: "50px",
@@ -31,6 +34,9 @@ export default makeStyles(() => {
             borderRadius: "5px"
         },
         heroContent: {
+            // backgroundImage: `url(${BackgroundImage}`,
+            // backgroundSize: 'cover',
+            // height: 800,
             backgroundColor: theme.palette.background.paper,
             padding: theme.spacing(8, 0, 6),
         },

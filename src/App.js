@@ -5,21 +5,22 @@ import StoryRoll from './components/StoryRoll/StoryRoll';
 import StoryDeck from './containers/StoryDeck/StoryDeck';
 import './App.css';
 import Layout from './containers/Layout/Layout';
+import useStyles from './containers/Layout/styles';
 
 const App = (props) => {
 
   const routes = (
     <Switch>
       <Route path='/story-roll' component={StoryRoll} />
-      <Route path='/story-deck' component={StoryDeck} />
-      <Route path='/backoffice' component={BackOffice} />
+      <Route path='/story-deck' render={(props) => <StoryDeck {...props} />} />
+      <Route path='/backoffice' render={(props) => <BackOffice {...props} />} />
       <Redirect from='/' exact to='/story-deck' />
     </Switch>
   );
 
   return (
     <BrowserRouter>
-      <Layout>{routes}</Layout>
+      <Layout classes={useStyles()} >{routes}</Layout>
     </BrowserRouter>
   );
 }

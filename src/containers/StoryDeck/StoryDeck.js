@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
@@ -14,6 +13,7 @@ import StoryCard from '../../components/StoryCard/StoryCard';
 import * as actions from '../../store/actions';
 import useStyles from '../Layout/styles';
 import './StoryDeck.css';
+import coverImage from '../../assets/cover-wfd.jpg';
 
 
 const StoryDeck = props => {
@@ -54,40 +54,33 @@ const StoryDeck = props => {
 
     return (
         <React.Fragment>
-            <CssBaseline />
-
+             <div className={classes.heroContent} >
+                <Container maxWidth="sm">
+                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                        Pick a story and listen in a South African language
+                    </Typography>
+                    <div className={classes.heroButtons}>
+                        <Grid container spacing={2} justify="center">
+                            {supportedLanguages.map(lang => (
+                                <Grid item>
+                                    <Button variant="contained" className={classes.languageButtons}>
+                                        {lang}
+                                    </Button>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </div>
+                </Container>
+            </div>
             <main>
-                {/* Hero unit */}
-                <div className={classes.heroContent}>
-                    <Container maxWidth="sm">
-                        {/* <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Album layout
-                  </Typography> */}
-                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            Pick a story and listen in a South African language
-                        </Typography>
-                        <div className={classes.heroButtons}>
-                            <Grid container spacing={2} justify="center">
-                                {supportedLanguages.map(lang => (
-                                    <Grid item>
-                                        <Button variant="contained" className={classes.languageButtons}>
-                                            {lang}
-                                        </Button>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </div>
-                    </Container>
-                </div>
                 <Container className={classes.cardGrid} maxWidth="md">
-                    {/* End hero unit */}
                     <Grid container spacing={4}>
                         {props.stories.map(story => (
                             <Grid item key={story.id} xs={12} sm={6} md={4}>
                                 <Card className={classes.card}>
                                     <CardMedia
                                         className={classes.cardMedia}
-                                        image="https://source.unsplash.com/random"
+                                        image={coverImage}
                                         title={story.title}
                                     />
                                     <CardContent className={classes.cardContent}>

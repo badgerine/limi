@@ -6,6 +6,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-stories';
@@ -13,6 +16,7 @@ import StoryCard from '../StoryCard/StoryCard';
 import './BackOffice.css';
 import { mediaUpload, newStoryForm } from './NewStory';
 import * as actions from '../../store/actions';
+import layoutClass from '../../containers/Layout/styles';
 
 
 
@@ -154,39 +158,27 @@ class BackOffice extends Component {
 
         return (
             <React.Fragment>
-                <h1>Story Admin</h1>
                 <Box display="flex" flexWrap="wrap">
-                    <Box>
-                        <div>
-                            <span><input type="text" /> <button>Search</button></span>
-                        </div>
-                        <br />
-                        <div>
-                            <span>New Story <button onClick={this.toggleNewStory}>Add</button></span>
-                        </div>
-                        <br />
-                        <div>
-                            <span> Remove Stories <button>Go</button></span>
-                        </div>
-                        <br />
-                    </Box>
+
+                    <div className={layoutClass.heroContent} >
+                        <Container maxWidth="sm">
+                            <div className={layoutClass.heroButtons}>
+                                <Grid container spacing={2} justify="center">
+                                    <Grid item>
+                                        <span>
+                                            <Button variant="contained" onClick={this.toggleNewStory}>
+                                                Add a new story
+                                            </Button>
+                                        </span>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Container>
+                    </div>
                     <Box>
                         {newStoryCard}
                     </Box>
                 </Box>
-                {/* <div>
-                    <span><input type="text" /> <button>Search</button></span>
-                </div>
-                <br />
-                <div>
-                    <span>New Story <button onClick={this.toggleNewStory}>Add</button></span>
-                </div>
-                <br />
-                <div>
-                    <span> Remove Stories <button>Go</button></span>
-                </div>
-                <br />
-                {newStoryCard} */}
                 <hr />
                 <Box display="flex" flexWrap="wrap">
                     {storyCards}
