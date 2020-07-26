@@ -1,36 +1,36 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import BackgroundImage from '../../assets/cansi-tiling.png';
 
 
 export default makeStyles(() => {
 
     const theme = createMuiTheme({
         palette: {
-          primary: {
-            main: '#c9340a',
-            contrastText: '#fff',
-          },
-          secondary: {
-            main: '#c9340a',
-            contrastText: '#000',
-          },
+            primary: {
+                main: '#c9340a',
+                contrastText: '#fff',
+            },
+            secondary: {
+                main: '#c9340a',
+                contrastText: '#000',
+            },
         },
-      });
-      
+    });
+
     return ({
-        appBar: {
-            backgroundColor: theme.palette.primary.main,
-            // color: theme.palette.primary.main
+        authentication: {
+            marginLeft: 'auto',
+            
         },
-        // paperContainer: {
-        //     backgroundImage: `url(${"../../assets/cansi-tiling.png"})`
-        // },
+        authText: {
+            paddingRight: "15px",
+        },
+        appBar: { backgroundColor: '#c9340a' },
         icon: {
             marginRight: theme.spacing(2),
             height: "50px",
-            width: "50px",
+            width: "55px",
             borderRadius: "5px"
         },
         heroContent: {
@@ -63,7 +63,8 @@ export default makeStyles(() => {
             flexGrow: 1,
         },
         footer: {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.primary.main,
+            color: '#F5F5F5',
             padding: theme.spacing(6),
         },
     })

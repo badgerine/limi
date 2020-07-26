@@ -1,22 +1,21 @@
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/styles';
-import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/styles';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-stories';
+import layoutClass from '../../containers/Layout/styles';
+import * as actions from '../../store/actions';
 import StoryCard from '../StoryCard/StoryCard';
 import './BackOffice.css';
 import { mediaUpload, newStoryForm } from './NewStory';
-import * as actions from '../../store/actions';
-import layoutClass from '../../containers/Layout/styles';
 
 
 

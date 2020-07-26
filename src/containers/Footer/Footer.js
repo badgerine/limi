@@ -22,12 +22,11 @@ const Footer = (props) => {
     const classes = useStyles();
     return (
         <footer className={classes.footer}>
-            <Typography variant="h6" align="center" gutterBottom>
-                Remember ...
-        </Typography>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                Language carries history through time. Story telling brings it to life.
-        </Typography>
+            <Typography variant="h6" align="center" color="textPrimary" gutterBottom>
+            </Typography>
+            <Typography variant="h6" align="center" color="textPrimary" gutterBottom>
+                Language carries identity through time. Story-telling brings it to life.
+            </Typography>
             <Copyright />
         </footer>
     )
