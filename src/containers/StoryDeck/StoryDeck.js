@@ -57,7 +57,7 @@ const StoryDeck = props => {
              <div className={classes.heroContent} >
                 <Container maxWidth="sm">
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        Pick a story and listen in a South African language
+                        Pick a story and listen in an indigenous South African language
                     </Typography>
                     <div className={classes.heroButtons}>
                         <Grid container spacing={2} justify="center">

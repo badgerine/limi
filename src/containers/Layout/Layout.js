@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
-import MenuBar from '../MenuBar/MenuBar2';
+import MenuBar from '../MenuBar/MenuBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './Layout.css';
 

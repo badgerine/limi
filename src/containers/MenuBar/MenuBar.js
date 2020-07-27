@@ -8,40 +8,49 @@ import PersonIcon from '@material-ui/icons/Person';
 import React from 'react';
 import LimiIcon from '../../assets/limi.png';
 import useStyles from '../Layout/styles';
-import './MenuBar.css';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box, useScrollTrigger } from '@material-ui/core';
 
+function ElevationScroll(props) {
+    const { children } = props;
 
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0
+    });
 
+    return React.cloneElement(children, {
+        elevation: trigger ? 4 : 0
+    });
+}
 
 const MenuBar = (props) => {
     const classes = useStyles();
 
     const authentication = (
-    <Box display="flex" direction='row' className={classes.authentication}>
-        <Typography component="h1" variant="h5" className={classes.authText} align="center">
-            Sign in
-        </Typography>
-        <Avatar >
-            <PersonIcon />
-        </Avatar>
-    </Box>);
+        <Toolbar className={classes.authentication}>
+            <Typography component="h1" variant="h5" className={classes.authText} >
+                Sign in
+            </Typography>
+            <Avatar >
+                <PersonIcon />
+            </Avatar>
+        </Toolbar>
+    );
     const search = null;
+
     return (
-        <AppBar position="relative" className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
-            <Toolbar>
-                <Box display="flex" flexGrow={1}>
-                    {/* <Box display="flex" direction='row'> */}
-                        <img src={LimiIcon} alt="Icon" className={classes.icon} />
-                        <Typography variant="h6" color="inherit" noWrap className={classes.title}>
-                            Limi
-                    </Typography>
+        <ElevationScroll>
+            <AppBar position="fixed" className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
+                <Toolbar>
+                    <img src={LimiIcon} alt="Icon" className={classes.icon} />
+                    <Typography variant="h6" color="inherit" noWrap className={classes.title}>
+                        Limi
+                </Typography>
                     {authentication}
                     {search}
-
-                </Box>
-            </Toolbar>
-        </AppBar>
+                </Toolbar>
+            </AppBar>
+        </ElevationScroll>
     )
 };
 

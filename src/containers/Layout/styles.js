@@ -21,7 +21,6 @@ export default makeStyles(() => {
     return ({
         authentication: {
             marginLeft: 'auto',
-            
         },
         authText: {
             paddingRight: "15px",
