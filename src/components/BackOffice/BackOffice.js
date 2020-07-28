@@ -15,8 +15,7 @@ import useStyles from '../../containers/Layout/styles';
 import * as actions from '../../store/actions';
 import StoryCard from '../StoryCard/StoryCard';
 import { mediaUpload, newStoryForm } from './NewStory';
-
-
+import BackgroundImage from '../../assets/cover-wfd.jpg';
 
 const styles = theme => ({
     card: {
@@ -162,7 +161,7 @@ const BackOffice = (props) => {
         <React.Fragment>
 
                 <div className={layoutClass.heroContent} >
-                    <Container maxWidth="md">
+                    <Container maxWidth="lg">
                         <div className={layoutClass.heroButtons}>
                             <Grid container spacing={2} justify="center">
                                 <Grid item>
@@ -179,9 +178,9 @@ const BackOffice = (props) => {
                 <Box>
                     {newStoryCard}
                 </Box>
-            <main>
-                <Container className={layoutClass.cardGrid} maxWidth="md">
-                    <Grid container spacing={4}>
+            <main className={layoutClass.backofficeBackground}>
+                <Container className={layoutClass.cardGrid} maxWidth="lg">
+                    <Grid container spacing={4} >
                         {storyCards}
                     </Grid>
                 </Container>

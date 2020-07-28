@@ -39,7 +39,7 @@ const StoryDeck = props => {
     );
     if (props.stories.length > 1) {
         storyCards = props.stories.map(story => (
-            <Grid item key={story.id} xs={12} sm={6} md={4}>
+            <Grid item key={story.id} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.cardMedia}
@@ -88,7 +88,7 @@ const StoryDeck = props => {
                 </Container>
             </div>
             <main>
-                <Container className={classes.cardGrid} maxWidth="md">
+                <Container className={classes.cardGrid} maxWidth="lg">
                     <Grid container spacing={4}>
                         {storyCards}
                     </Grid>

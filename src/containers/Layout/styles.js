@@ -1,7 +1,7 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-
+import BackgroundImage from '../../assets/cansi-tiling.png';
 
 export default makeStyles(() => {
 
@@ -31,6 +31,11 @@ export default makeStyles(() => {
             height: "50px",
             width: "55px",
             borderRadius: "5px"
+        },
+        backofficeBackground: {
+            backgroundImage: `url(${BackgroundImage})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize:'100%',
         },
         heroContent: {
             // backgroundImage: `url(${BackgroundImage}`,
