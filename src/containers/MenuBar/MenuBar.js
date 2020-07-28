@@ -36,7 +36,21 @@ const MenuBar = (props) => {
             </Avatar>
         </Toolbar>
     );
-    const search = null;
+    // const search = (
+    //     <div className={classes.search}>
+    //         <div className={classes.searchIcon}>
+    //           <SearchIcon />
+    //         </div>
+    //         <InputBase
+    //           placeholder="Search…"
+    //           classes={{
+    //             root: classes.inputRoot,
+    //             input: classes.inputInput,
+    //           }}
+    //           inputProps={{ 'aria-label': 'search' }}
+    //         />
+    //       </div>
+    // );
 
     return (
         <ElevationScroll>
@@ -45,9 +59,9 @@ const MenuBar = (props) => {
                     <img src={LimiIcon} alt="Icon" className={classes.icon} />
                     <Typography variant="h6" color="inherit" noWrap className={classes.title}>
                         Limi
-                </Typography>
+                    </Typography>
                     {authentication}
-                    {search}
+                    {/* {search} */}
                 </Toolbar>
             </AppBar>
         </ElevationScroll>

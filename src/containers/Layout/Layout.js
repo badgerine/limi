@@ -6,14 +6,18 @@ import './Layout.css';
 
 const Layout = (props) => {
     return (
-        <React.Fragment>
+        <div  class='mainContent'>
             <CssBaseline />
-            <MenuBar />
-            <main>
-                {props.children}
-            </main>
-            <Footer />
-        </React.Fragment>
+            <div>
+                <MenuBar />
+                <main>
+                    {props.children}
+                </main>
+            </div>
+            <div class='footer'>
+                <Footer />
+            </div>
+        </div>
     );
 }
 

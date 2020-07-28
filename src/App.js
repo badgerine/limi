@@ -3,7 +3,6 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import BackOffice from './components/BackOffice/BackOffice';
 import StoryRoll from './components/StoryRoll/StoryRoll';
 import StoryDeck from './containers/StoryDeck/StoryDeck';
-import './App.css';
 import Layout from './containers/Layout/Layout';
 import useStyles from './containers/Layout/styles';
 

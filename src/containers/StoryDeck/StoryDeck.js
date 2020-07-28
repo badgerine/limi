@@ -3,13 +3,12 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import StoryCard from '../../components/StoryCard/StoryCard';
+import Spinner from '../Layout/UI/Spinner/Spinner';
 import * as actions from '../../store/actions';
 import useStyles from '../Layout/styles';
 import './StoryDeck.css';
@@ -29,32 +28,48 @@ const StoryDeck = props => {
         })
     }
 
-    let storyCards = <CircularProgress color="secondary" />;
-    if (props.stories.length > 1) {
-        storyCards = props.stories.map(story => (
-            <div key={story.id} style={{ textDecoration: 'none' }}>
-                <StoryCard
-                    id={story.id}
-                    title={story.title}
-                    synopsis={story.synopsis}
-                    genre={story.genre}
-                    readingTime={story.readingTime}
-                    audioLanguage={story.audioLanguage}
-                    primaryText={story.primaryText}
-                    secondaryText={story.secondaryText}
-                    author={story.author}
-                    clicked={() => this.storySelectedHandler(story.id, story.mediaId)}
-                />
-            </div>
-        ));
-    }
 
     const classes = useStyles();
     const supportedLanguages = ['Sotho', 'TSONGA', 'VENDA', 'ZULU'];
 
+    let storyCards = (
+        <div style={{ width: '100%', height: '100%' }}>
+            <Spinner />
+        </div>
+    );
+    if (props.stories.length > 1) {
+        storyCards = props.stories.map(story => (
+            <Grid item key={story.id} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                    <CardMedia
+                        className={classes.cardMedia}
+                        image={coverImage}
+                        title={story.title}
+                    />
+                    <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {story.title}
+                        </Typography>
+                        <Typography>
+                            {story.synopsis}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" color="primary">
+                            View
+                        </Button>
+                        <Button size="small" color="primary">
+                            Edit
+                        </Button>
+                    </CardActions>
+                </Card>
+            </Grid>
+        ))
+    }
+
     return (
-        <React.Fragment>
-             <div className={classes.heroContent} >
+        <React.Fragment >
+            <div className={classes.heroContent} >
                 <Container maxWidth="sm">
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
                         Pick a story and listen in an indigenous South African language
@@ -75,33 +90,7 @@ const StoryDeck = props => {
             <main>
                 <Container className={classes.cardGrid} maxWidth="md">
                     <Grid container spacing={4}>
-                        {props.stories.map(story => (
-                            <Grid item key={story.id} xs={12} sm={6} md={4}>
-                                <Card className={classes.card}>
-                                    <CardMedia
-                                        className={classes.cardMedia}
-                                        image={coverImage}
-                                        title={story.title}
-                                    />
-                                    <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            {story.title}
-                                        </Typography>
-                                        <Typography>
-                                            {story.synopsis}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small" color="primary">
-                                            View
-                                        </Button>
-                                        <Button size="small" color="primary">
-                                            Edit
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))}
+                        {storyCards}
                     </Grid>
                 </Container>
             </main>

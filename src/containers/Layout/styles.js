@@ -37,10 +37,10 @@ export default makeStyles(() => {
             // backgroundSize: 'cover',
             // height: 800,
             backgroundColor: theme.palette.background.paper,
-            padding: theme.spacing(8, 0, 6),
+            padding: theme.spacing(10, 0, 4),
         },
         heroButtons: {
-            marginTop: theme.spacing(4),
+            marginTop: theme.spacing(2),
         },
         languageButtons: {
             color: theme.palette.background.paper,

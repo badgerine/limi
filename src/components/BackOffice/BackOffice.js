@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from '../../containers/Layout/UI/Spinner/Spinner';
 import Container from '@material-ui/core/Container';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -124,7 +124,11 @@ class BackOffice extends Component {
             </div>);
         }
 
-        let storyCards = <CircularProgress color="secondary" />;
+        let storyCards = (
+            <div style={{ width: '100%', height: '100%' }}>
+                <Spinner />
+            </div>
+        );
         if (this.props.stories.length > 0) {
             storyCards = this.props.stories.map(story => (
                 <Box p={1} key={story.id} style={{ textDecoration: 'none' }}>
