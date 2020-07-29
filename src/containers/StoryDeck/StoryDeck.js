@@ -62,7 +62,7 @@ const StoryDeck = props => {
                         <Button size="small" color="primary">
                             Info
                         </Button>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary" onClick={() => storySelectedHandler(story.id, story.mediaId)}>
                             Play
                         </Button>
                     </CardActions>

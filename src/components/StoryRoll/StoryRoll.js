@@ -9,10 +9,10 @@ class StoryRoll extends Component {
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     let mediaId = null;
-    console.log('query params='+query);
+    console.log('query params=' + query);
 
-    for (let param of query.entries()){
-      if('mediaId' === param[0]){
+    for (let param of query.entries()) {
+      if ('mediaId' === param[0]) {
         mediaId = param[1];
         break;
       }
@@ -26,10 +26,12 @@ class StoryRoll extends Component {
   render() {
     console.log('videoUrl: ');
     console.log(this.state.videoUrl);
-    const video = <video id='onScreen' src={this.state.videoUrl} controls playsInline type="video/mp4"/>
+    const video = <video id='onScreen' src={this.state.videoUrl} controls playsInline type="video/mp4" style={{width: '100%'}}/>
 
     return (
-      video
+      <div>
+        {video}
+      </div>
     );
   }
 

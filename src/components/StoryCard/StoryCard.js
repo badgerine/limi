@@ -12,6 +12,7 @@ const storyCard = (props) => (
             <div className="Info"><span>Text Language: </span>{props.primaryText}</div>
             <div className="Info"><span>Text Language Alt: </span>{props.secondaryText}</div>
             <div className="Info"><span>Author: </span>{props.author}</div>
+            <div className="Info"><span>MediaId: </span>{props.mediaId}</div>
         </div>
     </article>
 )

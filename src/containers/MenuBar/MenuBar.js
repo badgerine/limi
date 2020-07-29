@@ -8,7 +8,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import React from 'react';
 import LimiIcon from '../../assets/limi.png';
 import useStyles from '../Layout/styles';
-import { Grid, Box, useScrollTrigger } from '@material-ui/core';
+import { useScrollTrigger } from '@material-ui/core';
+import {withRouter} from 'react-router-dom';
 
 function ElevationScroll(props) {
     const { children } = props;
@@ -26,11 +27,17 @@ function ElevationScroll(props) {
 const MenuBar = (props) => {
     const classes = useStyles();
 
+    const menuBarPosition = () => {
+        if (props.history.location.pathname.includes('story-roll')) {
+            return 'relative';
+        } else {
+            return 'fixed';
+        }
+        
+    }
+
     const authentication = (
         <Toolbar className={classes.authentication}>
-            <Typography component="h1" variant="h5" className={classes.authText} >
-                Sign in
-            </Typography>
             <Avatar >
                 <PersonIcon />
             </Avatar>
@@ -54,10 +61,10 @@ const MenuBar = (props) => {
 
     return (
         <ElevationScroll>
-            <AppBar position="fixed" className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
+            <AppBar position={menuBarPosition()} className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
                 <Toolbar>
                     <img src={LimiIcon} alt="Icon" className={classes.icon} />
-                    <Typography variant="h6" color="inherit" noWrap className={classes.title}>
+                    <Typography variant="h5" color="inherit" noWrap className={classes.title}>
                         Limi
                     </Typography>
                     {authentication}
@@ -68,4 +75,4 @@ const MenuBar = (props) => {
     )
 };
 
-export default MenuBar;
+export default withRouter(MenuBar);
