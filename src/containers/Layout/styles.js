@@ -1,7 +1,7 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import BackgroundImage from '../../assets/cansi-tiling.png';
+import BackgroundImage from '../../assets/bamboo_craft.jpg';
 
 export default makeStyles(() => {
 
@@ -34,7 +34,6 @@ export default makeStyles(() => {
         },
         backofficeBackground: {
             backgroundImage: `url(${BackgroundImage})`,
-            backgroundRepeat: 'no-repeat',
             backgroundSize:'100%',
         },
         heroContent: {
@@ -69,7 +68,7 @@ export default makeStyles(() => {
         footer: {
             backgroundColor: theme.palette.primary.main,
             color: '#F5F5F5',
-            padding: theme.spacing(6),
+            padding: theme.spacing(2),
         },
     })
 });

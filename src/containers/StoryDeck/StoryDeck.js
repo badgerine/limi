@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import { Grid, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../Layout/UI/Spinner/Spinner';
@@ -53,13 +54,16 @@ const StoryDeck = props => {
                         <Typography>
                             {story.synopsis}
                         </Typography>
+                        <Typography variant='body2'>
+                            <ScheduleIcon fontSize='small'/>{story.readingTime}
+                        </Typography>
                     </CardContent>
                     <CardActions>
                         <Button size="small" color="primary">
-                            View
+                            Info
                         </Button>
                         <Button size="small" color="primary">
-                            Edit
+                            Play
                         </Button>
                     </CardActions>
                 </Card>
