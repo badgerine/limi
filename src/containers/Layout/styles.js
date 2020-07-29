@@ -22,12 +22,12 @@ export default makeStyles(() => {
         authentication: {
             marginLeft: 'auto',
         },
-        authText: {
-            paddingRight: "15px",
+        authenticatedItems: {
+            paddingLeft: theme.spacing(1),
         },
         appBar: { backgroundColor: '#c9340a' },
         icon: {
-            marginRight: theme.spacing(2),
+            // marginRight: theme.spacing(2),
             height: "50px",
             width: "55px",
             borderRadius: "5px"
