@@ -1,13 +1,12 @@
 import React from 'react';
-import Auxilliary from '../../../containers/Auxilliary/Auxilliary';
-import Backdrop from '../Backdrop/Backdrop';
+// import Backdrop from '../Backdrop/Backdrop';
 import classes from './Modal.module.css';
 
 const Modal = (props) => {
 
     return (
-        <Auxilliary>
-            <Backdrop show={props.show} clicked={props.modalClosed} />
+        <React.Fragment>
+            {/* <Backdrop show={props.show} clicked={props.modalClosed} /> */}
             <div
                 className={classes.Modal}
                 style={{
@@ -16,7 +15,7 @@ const Modal = (props) => {
                 }}>
                 {props.children}
             </div>
-        </Auxilliary>
+        </React.Fragment>
     );
 }
 

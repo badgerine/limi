@@ -1,22 +1,9 @@
 
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import BackgroundImage from '../../assets/bamboo_craft.jpg';
+import theme from '../../ui/Theme';
 
 export default makeStyles(() => {
-
-    const theme = createMuiTheme({
-        palette: {
-            primary: {
-                main: '#c9340a',
-                contrastText: '#fff',
-            },
-            secondary: {
-                main: '#c9340a',
-                contrastText: '#000',
-            },
-        },
-    });
 
     return ({
         authentication: {

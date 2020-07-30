@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Spinner from '../Layout/UI/Spinner/Spinner';
+import Spinner from '../../ui/Spinner/Spinner';
 import * as actions from '../../store/actions';
 import useStyles from '../Layout/styles';
 import './StoryDeck.css';

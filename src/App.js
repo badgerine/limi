@@ -6,6 +6,8 @@ import StoryDeck from './containers/StoryDeck/StoryDeck';
 import Authentication from './components/Authentication/Authentication';
 import Layout from './containers/Layout/Layout';
 import useStyles from './containers/Layout/styles';
+import theme from './ui/Theme';
+import { ThemeProvider } from '@material-ui/core';
 
 const App = (props) => {
 
@@ -14,15 +16,17 @@ const App = (props) => {
       <Route path='/story-roll' component={StoryRoll} />
       <Route path='/story-deck' render={(props) => <StoryDeck {...props} />} />
       <Route path='/backoffice' render={(props) => <BackOffice {...props} />} />
-      <Route path='/authentication' render={(props) => <Authentication {...props}/>}/>
+      <Route path='/authentication' render={(props) => <Authentication {...props} />} />
       <Redirect from='/' exact to='/story-deck' />
     </Switch>
   );
 
   return (
-    <BrowserRouter>
-      <Layout classes={useStyles()} >{routes}</Layout>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Layout classes={useStyles()} >{routes}</Layout>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
