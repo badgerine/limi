@@ -28,7 +28,7 @@ export default makeStyles(() => {
             // backgroundSize: 'cover',
             // height: 800,
             backgroundColor: theme.palette.background.paper,
-            padding: theme.spacing(10, 0, 4),
+            padding: theme.spacing(5, 0, 4),
         },
         heroButtons: {
             marginTop: theme.spacing(2),
@@ -38,7 +38,7 @@ export default makeStyles(() => {
             backgroundColor: theme.palette.primary.main,
         },
         cardGrid: {
-            paddingTop: theme.spacing(8),
+            paddingTop: theme.spacing(4),
             paddingBottom: theme.spacing(8),
         },
         card: {

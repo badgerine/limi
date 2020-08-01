@@ -6,11 +6,18 @@ import Typography from '@material-ui/core/Typography'
 import { Button, InputBase } from '@material-ui/core';
 import { Person as PersonIcon, Search as SearchIcon } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import LimiIcon from '../../assets/limi.png';
 import useStyles from '../Layout/styles';
 import { useScrollTrigger } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+
+const useInlineStyles = makeStyles(theme => ({
+    toolbarMargin: {
+        ...theme.mixins.toolbar
+    },
+}));
 
 function ElevationScroll(props) {
     const { children } = props;
@@ -27,6 +34,7 @@ function ElevationScroll(props) {
 
 const MenuBar = (props) => {
     const classes = useStyles();
+    const inlineClasses = useInlineStyles();
 
     const authenticationHandler = () => {
         props.history.push({
@@ -83,20 +91,23 @@ const MenuBar = (props) => {
     );
 
     return (
-        <ElevationScroll>
-            <AppBar position={menuBarPosition()} className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
-                <Toolbar>
-                    <IconButton color="inherit" variant='outlined' onClick={homeHandler}>
-                        <img src={LimiIcon} alt="Icon" className={classes.icon} />
-                    </IconButton>
-                    <Typography variant="h5" color="inherit" noWrap className={classes.title}>
-                        Limi
+        <React.Fragment>
+            <ElevationScroll>
+                <AppBar position={menuBarPosition()} className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
+                    <Toolbar>
+                        <IconButton color="inherit" variant='outlined' onClick={homeHandler}>
+                            <img src={LimiIcon} alt="Icon" className={classes.icon} />
+                        </IconButton>
+                        <Typography variant="h5" color="inherit" noWrap className={classes.title}>
+                            Limi
                     </Typography>
-                    {authenticated}
-                    {/* {search} */}
-                </Toolbar>
-            </AppBar>
-        </ElevationScroll>
+                        {authenticated}
+                        {/* {search} */}
+                    </Toolbar>
+                </AppBar>
+            </ElevationScroll>
+            <div className={inlineClasses.toolbarMargin}/>
+        </React.Fragment>
     )
 };
 

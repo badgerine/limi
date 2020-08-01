@@ -160,24 +160,24 @@ const BackOffice = (props) => {
     return (
         <React.Fragment>
 
-                <div className={layoutClass.heroContent} >
-                    <Container maxWidth="lg">
-                        <div className={layoutClass.heroButtons}>
-                            <Grid container spacing={2} justify="center">
-                                <Grid item>
-                                    <span>
-                                        <Button variant="contained" onClick={toggleNewStory} className={layoutClass.languageButtons}>
-                                            Add a new story
-                                        </Button>
-                                    </span>
-                                </Grid>
+            <div className={layoutClass.heroContent} >
+                <Container maxWidth="lg">
+                    <div className={layoutClass.heroButtons}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item>
+                                <span>
+                                    <Button variant="contained" onClick={toggleNewStory} className={layoutClass.languageButtons}>
+                                        Add a new story
+                                    </Button>
+                                </span>
                             </Grid>
-                        </div>
-                    </Container>
-                </div>
-                <Box>
-                    {newStoryCard}
-                </Box>
+                        </Grid>
+                    </div>
+                </Container>
+            </div>
+            <Box>
+                {newStoryCard}
+            </Box>
             <main className={layoutClass.backofficeBackground}>
                 <Container className={layoutClass.cardGrid} maxWidth="lg">
                     <Grid container spacing={4} >
