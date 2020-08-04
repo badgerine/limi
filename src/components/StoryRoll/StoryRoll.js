@@ -29,7 +29,7 @@ class StoryRoll extends Component {
     const video = <video id='onScreen' src={this.state.videoUrl} controls playsInline type="video/mp4" style={{width: '100%'}}/>
 
     return (
-      <div>
+      <div style={{backgroundColor: '#333333'}}>
         {video}
       </div>
     );

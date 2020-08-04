@@ -3,10 +3,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import React, { Fragment } from "react";
-import firebaseService from '../FirebaseService/FirebaseService';
 import {MediaUploader} from './MediaUploader';
 
-export const newStoryForm = (newStoryInput, classes) => {
+export const captureDetailsForm = (newStoryInput, classes) => {
     return (
         <Fragment>
             <DialogContentText>Complete the new Story details.</DialogContentText>
@@ -108,11 +107,7 @@ export const newStoryForm = (newStoryInput, classes) => {
     );
 }
 
-const fileSelectedHandler = event => {
-    console.log(event);
-}
-
-export const mediaUpload = (title, returnMediaId) => {
+export const captureMediaForm = (title, returnMediaId, uploadFunction) => {
     // returnMediaId('TODO-after-upload');
     return (
         <MediaUploader storyTitle={title} getMediaId={(mediaId) => returnMediaId(mediaId)} />

@@ -32,6 +32,19 @@ export const addStory = (story) => {
     }
 }
 
+export const uploadStory = () => {
+    console.log('[actions.js] uploadStory');
+    return {
+        type: actionTypes.UPLOAD_STORY
+    }
+}
+
+export const mediaUploadComplete = () => {
+    return {
+        type: actionTypes.STORY_UPLOAD_COMPLETE
+    }
+}
+
 const fetchStoriesSuccess = (fetchedStories) => {
     return {
         type: actionTypes.FETCH_STORIES_SUCCESS,

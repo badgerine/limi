@@ -14,8 +14,7 @@ import axios from '../../axios-stories';
 import useStyles from '../../containers/Layout/styles';
 import * as actions from '../../store/actions';
 import StoryCard from '../StoryCard/StoryCard';
-import { mediaUpload, newStoryForm } from './NewStory';
-import BackgroundImage from '../../assets/cover-wfd.jpg';
+import { captureMediaForm, captureDetailsForm } from './NewStory';
 
 const styles = theme => ({
     card: {
@@ -45,8 +44,15 @@ const BackOffice = (props) => {
         }
     }, [storiesModified]);
 
+    useEffect(() => {
+        if(nextCount == 2){
+            handleSubmitStory();
+        }
+    }, [newStory, nextCount])
+
     const toggleNext = () => {
         setNextCount(nextCount + 1);
+        console.log('[Backoffice.toggleNext():nextCount=', nextCount);
 
     }
 
@@ -54,40 +60,30 @@ const BackOffice = (props) => {
 
     }
 
-    const updateNewStoryMediaId = (mediaId) => {
-        if (mediaId != newStory.mediaId) {
-            const incompleteStory = { ...newStory };
-            incompleteStory[mediaId] = mediaId;
-            console.log('[Backoffice.updateNewStoryMediaId]', 'trying to set the mediaId', mediaId);
-            setNewStory(incompleteStory);
-        }
-    }
-
-
     const toggleNewStory = () => {
         setNewStoryOpen(!isNewStoryOpen);
     }
 
-    const memoriseStory = (newStoryInput) => {
+    const captureStory = (newStoryInput) => {
         if (nextCount == 0) {
-            console.log('[Backoffice.memoriseStory]', newStoryInput);
+            console.log('[Backoffice.captureStory] count==0', newStoryInput);
             setNewStory(newStoryInput);
             toggleNext();
-        } else {
-            console.log('[Backoffice.memoriseStory]', 'trying to set the mediaId', newStoryInput);
-            // setState({ isNewStoryOpen: false, newStory: newStoryInput }, () => handleSubmitStory());
-            setNewStoryOpen(false);
+        } else if (nextCount == 1) {
+            console.log('[Backoffice.captureStory] count==1', newStoryInput);
             setNewStory(newStoryInput);
-            handleSubmitStory(); //#TODO handle synchronising this call after state update
-
+            toggleNext();
+        }
+        else {
+            setNewStoryOpen(false);
         }
     }
 
     const handleSubmitStory = () => {
-        const completeNewStory = { ...newStory };
-        axios.post('stories.json', completeNewStory)
+        props.onAddStory(newStory);
+        axios.post('stories.json', newStory)
             .then(response => {
-                props.onAddStory(completeNewStory);
+                props.uploadStory();
                 console.log('[Backoffice.handleSubmitStory]', response);
             })
             .catch(error => {
@@ -147,14 +143,16 @@ const BackOffice = (props) => {
 
     let newStoryEntry = null;
     switch (nextCount) {
-        case 0: newStoryEntry = newStoryForm(newStoryInput, classes);
+        case 0: newStoryEntry = captureDetailsForm(newStoryInput, classes);
             break;
-        case 1: newStoryEntry = mediaUpload(newStory.title,
+        case 1: 
+        case 2: newStoryEntry = captureMediaForm(newStory.title,
             // (mediaIdInput) => updateNewStoryMediaId(mediaId));
             (mediaIdInput) => {
                 newStoryInput = { ...newStory };
                 newStoryInput['mediaId'] = mediaIdInput;
             })
+            break;
     }
 
     return (
@@ -195,8 +193,8 @@ const BackOffice = (props) => {
                     <Button onClick={toggleNewStory} color="primary">
                         Cancel
                         </Button>
-                    <Button onClick={() => memoriseStory(newStoryInput)} color="primary">
-                        {nextCount == 0 ? 'Next' : 'Submit'}
+                    <Button onClick={() => captureStory(newStoryInput)} color="primary">
+                        {nextCount == 0 ? 'Next' : (nextCount == 1 ? 'Submit' : 'Ok')}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -208,14 +206,16 @@ const BackOffice = (props) => {
 const mapStateToProps = (state) => {
     return {
         stories: state.stories,
-        storiesLoaded: state.storiesLoaded
+        storiesLoaded: state.storiesLoaded,
+        storiesModified: state.storiesModified
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         onLoadStories: () => dispatch(actions.fetchStories()),
-        onAddStory: (newStory) => dispatch(actions.addStory(newStory))
+        onAddStory: (newStory) => dispatch(actions.addStory(newStory)),
+        uploadStory: () => dispatch(actions.uploadStory())
     }
 }
 

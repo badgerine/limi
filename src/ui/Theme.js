@@ -16,4 +16,11 @@ export default createMuiTheme({
       main: charcoalBlack,
     },
   },
+  typography: {
+    tab: {
+        textTransform: 'none',
+        fontWeight: 700,
+        fontSize: '1rem',
+    },
+  }
 });

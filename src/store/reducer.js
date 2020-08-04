@@ -6,7 +6,9 @@ const initialState = {
     storiesLoaded: false,
     storiesModified: false,
     error: null,
-    stories: []
+    stories: [],
+    uploadStory: false,
+    storyUploadComplete: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,11 +34,23 @@ const reducer = (state = initialState, action) => {
                 error: action.error
             }
         case actionTypes.ADD_STORY:
-            const updatedStories = [...state.stories].push(action.newStory);
+            const updatedStories = [].concat(state.stories).push(action.newStory);
             return {
                 ...state,
                 stories: updatedStories,
-                storiesModified: true
+                storiesModified: true,
+                uploadStory: false
+            }
+        case actionTypes.UPLOAD_STORY:
+            return {
+                ...state,
+                uploadStory: true
+            }
+        case actionTypes.STORY_UPLOAD_COMPLETE:
+            return {
+                ...state,
+                uploadStory: false,
+                storyUploadComplete: true
             }
         default:
             return state;
