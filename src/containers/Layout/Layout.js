@@ -6,15 +6,13 @@ import './Layout.css';
 
 const Layout = (props) => {
     return (
-        <div  class='mainContent'>
+        <div className='container'>
             <CssBaseline />
-            <div>
-                <MenuBar />
-                <main>
-                    {props.children}
-                </main>
-            </div>
-            <div class='footer'>
+            <MenuBar />
+            <main className='mainContent'>
+                {props.children}
+            </main>
+            <div className='footer'>
                 <Footer />
             </div>
         </div>

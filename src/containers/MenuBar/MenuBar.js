@@ -7,7 +7,7 @@ import { Button, InputBase } from '@material-ui/core';
 import { Person as PersonIcon, Search as SearchIcon } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LimiIcon from '../../assets/limi.png';
 import useStyles from '../Layout/styles';
 import { useScrollTrigger } from '@material-ui/core';
@@ -35,6 +35,13 @@ function ElevationScroll(props) {
 const MenuBar = (props) => {
     const classes = useStyles();
     const inlineClasses = useInlineStyles();
+    const [toolbarMargin, setToolbarMargin] = useState(null);
+    const [menuBarPosition, setMenuBarPosition] = useState('fixed');
+
+    const { pathname } = props.history.location;
+    useEffect(() => {
+        adjustToolbar();
+    },[pathname]);
 
     const authenticationHandler = () => {
         props.history.push({
@@ -48,11 +55,13 @@ const MenuBar = (props) => {
         })
     }
 
-    const menuBarPosition = () => {
-        if (props.history.location.pathname.includes('story-roll')) {
-            return 'relative';
+    const adjustToolbar = () => {
+        if (pathname.includes('story-roll')) {
+            setMenuBarPosition('relative');
+            setToolbarMargin(null);
         } else {
-            return 'fixed';
+            setMenuBarPosition('fixed');
+            setToolbarMargin(<div className={inlineClasses.toolbarMargin}/>);
         }
 
     }
@@ -93,7 +102,7 @@ const MenuBar = (props) => {
     return (
         <React.Fragment>
             <ElevationScroll>
-                <AppBar position={menuBarPosition()} className={classes.appBar} style={{ backgroundColor: '#c9340a' }} >
+                <AppBar position={menuBarPosition} >
                     <Toolbar>
                         <IconButton color="inherit" variant='outlined' onClick={homeHandler}>
                             <img src={LimiIcon} alt="Icon" className={classes.icon} />
@@ -106,7 +115,7 @@ const MenuBar = (props) => {
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
-            <div className={inlineClasses.toolbarMargin}/>
+            {toolbarMargin}
         </React.Fragment>
     )
 };

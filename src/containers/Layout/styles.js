@@ -12,7 +12,6 @@ export default makeStyles(() => {
         authenticatedItems: {
             paddingLeft: theme.spacing(1),
         },
-        appBar: { backgroundColor: '#c9340a' },
         icon: {
             // marginRight: theme.spacing(2),
             height: "50px",
@@ -56,6 +55,7 @@ export default makeStyles(() => {
             backgroundColor: theme.palette.primary.main,
             color: '#F5F5F5',
             padding: theme.spacing(2),
+            height: '100%'
         },
     })
 });
