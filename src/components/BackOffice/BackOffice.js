@@ -45,7 +45,7 @@ const BackOffice = (props) => {
     }, [storiesModified]);
 
     useEffect(() => {
-        if(nextCount == 2){
+        if (nextCount == 3) {
             handleSubmitStory();
         }
     }, [newStory, nextCount])
@@ -73,6 +73,10 @@ const BackOffice = (props) => {
             console.log('[Backoffice.captureStory] count==1', newStoryInput);
             setNewStory(newStoryInput);
             toggleNext();
+        }
+        else if (nextCount == 2) {
+            console.log('[Backoffice.captureStory] count==1', newStoryInput);
+            setNewStory(newStoryInput);
         }
         else {
             setNewStoryOpen(false);
@@ -113,6 +117,7 @@ const BackOffice = (props) => {
                 secondaryText={newStory.secondaryText}
                 author={newStory.author}
                 mediaId={newStory.mediaId}
+                coverId={newStory.coverId}
                 clicked={() => storySelectedHandler(newStory.id, newStory.mediaId)}
             />
         </div>);
@@ -145,9 +150,13 @@ const BackOffice = (props) => {
     switch (nextCount) {
         case 0: newStoryEntry = captureDetailsForm(newStoryInput, classes);
             break;
-        case 1: 
-        case 2: newStoryEntry = captureMediaForm(newStory.title,
-            // (mediaIdInput) => updateNewStoryMediaId(mediaId));
+        case 1: newStoryEntry = captureMediaForm(newStory.title,
+            (coverIdInput) => {
+                newStoryInput = { ...newStory };
+                newStoryInput['coverId'] = coverIdInput;
+            })
+            break;
+        case 2: case 3: newStoryEntry = captureMediaForm(newStory.title,
             (mediaIdInput) => {
                 newStoryInput = { ...newStory };
                 newStoryInput['mediaId'] = mediaIdInput;
@@ -194,7 +203,13 @@ const BackOffice = (props) => {
                         Cancel
                         </Button>
                     <Button onClick={() => captureStory(newStoryInput)} color="primary">
-                        {nextCount == 0 ? 'Next' : (nextCount == 1 ? 'Submit' : 'Ok')}
+                        {(() => {
+                            switch (nextCount) {
+                                case 0: case 1: return 'Next';
+                                case 2: return 'Submit';
+                                default: return 'Okay'
+                            }
+                        })()}
                     </Button>
                 </DialogActions>
             </Dialog>

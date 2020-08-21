@@ -20,7 +20,7 @@ export default makeStyles(() => {
         },
         backofficeBackground: {
             backgroundImage: `url(${BackgroundImage})`,
-            backgroundSize:'100%',
+            backgroundSize: '100%',
         },
         heroContent: {
             // backgroundImage: `url(${BackgroundImage}`,
@@ -31,6 +31,15 @@ export default makeStyles(() => {
         },
         heroButtons: {
             marginTop: theme.spacing(2),
+        },
+        img: {
+            maxHeight: '21rem',
+            maxWidth: '100%',
+            margin: 'auto',
+        },
+        image: {
+            width: '100%',
+            height: '100%',
         },
         languageButtons: {
             color: theme.palette.background.paper,

@@ -9,11 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import firebase from '../../components/FirebaseService/FirebaseService';
 import Spinner from '../../ui/Spinner/Spinner';
 import * as actions from '../../store/actions';
 import useStyles from '../Layout/styles';
 import './StoryDeck.css';
-import coverImage from '../../assets/cover-wfd.jpg';
+import defaultCoverImage from '../../assets/cover-wfd.jpg';
 
 
 const StoryDeck = props => {
@@ -21,6 +22,14 @@ const StoryDeck = props => {
     useEffect(() => {
         props.onLoadStories();
     }, [props.storiesModified]);
+
+    const retrieveCover = (coverImageId, imageUrl) => {
+        if(coverImageId !== null){
+            firebase.storage().ref().child(`media/${coverImageId}`).getDownloadURL().then(url => {
+                imageUrl = url;
+            });
+        }
+    };
 
     const storySelectedHandler = (id, mediaId) => {
         props.history.push({
@@ -44,7 +53,7 @@ const StoryDeck = props => {
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.cardMedia}
-                        image={coverImage}
+                        image={story.coverImageId != null ? retrieveCover(story.coverImageId) : defaultCoverImage}
                         title={story.title}
                     />
                     <CardContent className={classes.cardContent}>
@@ -55,7 +64,7 @@ const StoryDeck = props => {
                             {story.synopsis}
                         </Typography>
                         <Typography variant='body2'>
-                            <ScheduleIcon fontSize='small'/>{story.readingTime}
+                            <ScheduleIcon fontSize='small' />{story.readingTime}
                         </Typography>
                     </CardContent>
                     <CardActions>
