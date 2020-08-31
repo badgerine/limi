@@ -118,7 +118,7 @@ export const MediaUploader = (props) => {
                         </Button>
                         }
                     </ButtonBase>
-                    {coverImageUrl != null ? (
+                    {coverImageUrl != null && mediaAsObjectUrl == null ? (
                         <div style={{ maxWidth: '120px', maxHeight: '120px' }} >
                             <img src={coverImageUrl} alt="cover image visualisation" style={{ maxWidth: '100px', maxHeight: '100px' }} />
                         </div>

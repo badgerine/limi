@@ -108,7 +108,6 @@ export const captureDetailsForm = (newStoryInput, classes) => {
 }
 
 export const captureMediaForm = (title, returnMediaId, uploadFunction) => {
-    // returnMediaId('TODO-after-upload');
     return (
         <MediaUploader storyTitle={title} getMediaId={(mediaId) => returnMediaId(mediaId)} />
        )

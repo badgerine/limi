@@ -77,6 +77,7 @@ const BackOffice = (props) => {
         else if (nextCount == 2) {
             console.log('[Backoffice.captureStory] count==1', newStoryInput);
             setNewStory(newStoryInput);
+            toggleNext();
         }
         else {
             setNewStoryOpen(false);
