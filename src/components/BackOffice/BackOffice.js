@@ -14,7 +14,7 @@ import axios from '../../axios-stories';
 import useStyles from '../../containers/Layout/styles';
 import * as actions from '../../store/actions';
 import StoryCard from '../StoryCard/StoryCard';
-import { CaptureMediaForm, CaptureDetailsForm, CaptureVideoForm, ConfirmMedia, UploadStatus } from './NewStory';
+import { CaptureDetailsForm, CaptureImageForm, CaptureVideoForm, ConfirmMedia, UploadStatus } from './NewStory';
 
 const styles = theme => ({
   card: {
@@ -104,16 +104,10 @@ const BackOffice = (props) => {
   }
 
   const handleSubmitStory = () => {
-    props.onAddStory(newStory);
-    axios.post('stories.json', newStory)
-      .then(response => {
-        props.uploadStory();
-        console.log('[Backoffice.handleSubmitStory]', response);
-      })
-      .catch(error => {
-        console.log('[Backoffice.handleSubmitStory]Error, something went wrong trying to persist story.', error);
-      })
+    props.uploadStoryDetails(newStory);
   }
+
+  
 
   const storySelectedHandler = (storyId, mediaId) => {
     console.log('story selected=', storyId, " | ", mediaId);
@@ -172,7 +166,7 @@ const BackOffice = (props) => {
   switch (nextCount) {
     case 0: newStoryEntry = CaptureDetailsForm(newStoryInput, classes);
       break;
-    case 1: newStoryEntry = <CaptureMediaForm
+    case 1: newStoryEntry = <CaptureImageForm
       title={newStory.title + ' | Cover Image'}
       returnMediaId={
         (coverIdInput) => {
@@ -204,12 +198,14 @@ const BackOffice = (props) => {
       mediaId={newStory.mediaId}
       mediaObject={newStoryMedia} />
       break;
-    case 4: newStoryEntry = <UploadStatus
+    case 4: 
+    newStoryEntry = <UploadStatus
       title={newStory.title + ' | Uploading... Do not close or navigate away!'}
       storyDetailsUploaded={storyDetailsUploaded}
       storyImageUploaded={storyImageUploaded}
       storyVideoUploaded={storyVideoUploaded}
-    />
+    />;
+
     break;
   }
 
@@ -285,7 +281,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onLoadStories: () => dispatch(actions.fetchStories()),
     onAddStory: (newStory) => dispatch(actions.addStory(newStory)),
-    uploadStory: () => dispatch(actions.uploadStory())
+    uploadStoryDetails: (newStory) => dispatch(actions.uploadStoryDetails(newStory))
   }
 }
 

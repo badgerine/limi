@@ -7,7 +7,6 @@ import ReactPlayer from 'react-player';
 import Spinner from '../../ui/Spinner/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, ButtonBase } from '@material-ui/core';
-import { MediaUploader } from './MediaUploader';
 
 export const CaptureDetailsForm = (newStoryInput, classes) => {
   return (
@@ -126,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CaptureMediaForm = (props) => {
+export const CaptureImageForm = (props) => {
   const [mediaUrl, setMediaUrl] = useState(null);
   const hiddenFileInput = useRef();
   const classes = useStyles();
