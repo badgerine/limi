@@ -52,11 +52,29 @@ const BackOffice = (props) => {
     }
   }, [newStory, nextCount]);
 
+  useEffect(() => {
+    if (nextCount >= 4) {
+      setStoryDetailsUploaded(props.detailsUplaodComplete);
+    }
+  }, [props.detailsUplaodComplete]);
+
+  useEffect(() => {
+    if (nextCount >= 4) {
+      setStoryImageUploaded(props.imageUploadComplete);
+    }
+  }, [props.imageUploadComplete]);
+
+  useEffect(() => {
+    if (nextCount >= 4) {
+      setStoryVideoUploaded(props.contentUploadComplete);
+    }
+  }, [props.contentUploadComplete]);
+
   //debugging - delete when ui is working
   useEffect(() => {
     if (newStoryCover !== null || newStoryMedia !== null) {
-      console.log('newStoryCover:', newStoryCover, 'newStoryMedia:', newStoryMedia);
-      console.log('coverId:', newStory.coverId, 'mediaId:', newStory.mediaId);
+      console.log('[Backoffice.useEffect]newStoryCover:', newStoryCover, 'newStoryMedia:', newStoryMedia);
+      console.log('[Backoffice.useEffect]coverId:', newStory.coverId, 'mediaId:', newStory.mediaId);
     }
   }, [newStoryCover, newStoryMedia]);
 
@@ -107,7 +125,7 @@ const BackOffice = (props) => {
     props.uploadStoryDetails(newStory);
   }
 
-  
+
 
   const storySelectedHandler = (storyId, mediaId) => {
     console.log('story selected=', storyId, " | ", mediaId);
@@ -166,25 +184,28 @@ const BackOffice = (props) => {
   switch (nextCount) {
     case 0: newStoryEntry = CaptureDetailsForm(newStoryInput, classes);
       break;
-    case 1: newStoryEntry = <CaptureImageForm
-      title={newStory.title + ' | Cover Image'}
-      returnMediaId={
-        (coverIdInput) => {
-          newStoryInput = { ...newStory };
-          newStoryInput['coverId'] = coverIdInput;
-        }}
-      returnMediaObject={
-        (coverObject) => {
-          coverImage = coverObject;
-        }
-      } />
+    case 1:
+      newStoryInput = { ...newStory };
+      newStoryEntry = <CaptureImageForm
+        title={newStory.title + ' | Cover Image'}
+        returnMediaId={
+          (coverIdInput) => {
+            newStoryInput['coverId'] = coverIdInput;
+          }}
+        returnMediaObject={
+          (coverObject) => {
+            coverImage = coverObject;
+          }
+        } />
       break;
-    case 2: newStoryEntry = <CaptureVideoForm
+    case 2: 
+    newStoryInput = { ...newStory };
+    newStoryEntry = <CaptureVideoForm
       title={newStory.title + ' | Story Content|Video'}
       returnMediaId={
         (mediaIdInput) => {
-          newStoryInput = { ...newStory };
           newStoryInput['mediaId'] = mediaIdInput;
+          console.log('given that the mediaId is', mediaIdInput, ', the story details are now:', newStoryInput)
         }}
       returnMediaObject={
         (mediaObject) => {
@@ -198,15 +219,15 @@ const BackOffice = (props) => {
       mediaId={newStory.mediaId}
       mediaObject={newStoryMedia} />
       break;
-    case 4: 
-    newStoryEntry = <UploadStatus
-      title={newStory.title + ' | Uploading... Do not close or navigate away!'}
-      storyDetailsUploaded={storyDetailsUploaded}
-      storyImageUploaded={storyImageUploaded}
-      storyVideoUploaded={storyVideoUploaded}
-    />;
+    case 4:
+      newStoryEntry = <UploadStatus
+        title={newStory.title + ' | Uploading... Do not close or navigate away!'}
+        storyDetailsUploaded={storyDetailsUploaded}
+        storyImageUploaded={storyImageUploaded}
+        storyVideoUploaded={storyVideoUploaded}
+      />;
 
-    break;
+      break;
   }
 
   return (
@@ -273,8 +294,11 @@ const mapStateToProps = (state) => {
   return {
     stories: state.stories,
     storiesLoaded: state.storiesLoaded,
-    storiesModified: state.storiesModified
-  };
+    storiesModified: state.storiesModified,
+    detailsUplaodComplete: state.detailsUplaodComplete,
+    imageUploadComplete: state.imageUploadComplete,
+    contentUploadComplete: state.contentUploadComplete
+  }
 };
 
 const mapDispatchToProps = dispatch => {

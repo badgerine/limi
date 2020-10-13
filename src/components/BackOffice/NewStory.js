@@ -140,6 +140,7 @@ export const CaptureImageForm = (props) => {
   }
 
   const handleMediaAsFile = (e) => {
+    console.log('[NewStory_(input.onChange)_handleMediaAsFile] onChange toggled, therefore callback should be triggered.')
     const media = e.target.files[0];
     e.preventDefault();
     setMediaUrl(URL.createObjectURL(media));
@@ -147,7 +148,7 @@ export const CaptureImageForm = (props) => {
     props.returnMediaObject(URL.createObjectURL(media));
   }
 
-  return (<Grid containter direction='column'>
+  return (<Grid container direction='column'>
     <Grid item>
       <h3>{props.title}</h3>
     </Grid>
@@ -187,7 +188,7 @@ export const CaptureVideoForm = (props) => {
     props.returnMediaObject(URL.createObjectURL(media));
   }
 
-  return (<Grid containter direction='column'>
+  return (<Grid container direction='column'>
     <Grid item>
       <h3>{props.title}</h3>
     </Grid>
